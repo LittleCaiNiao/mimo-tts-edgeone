@@ -26,9 +26,9 @@ export default function onRequest(context) {
   const v_name = VOICES[voice] || `音色(${voice})`;
 
   const base_url = `${url.protocol}//${url.host}`;
-  const safeKey = encodeURIComponent(api_key);
 
-  const tts_url = `${base_url}/tts?api_key=${safeKey}&voice=${voice}&model=${model}&volume=100&pitch=0&rate={{(speakSpeed - 10) * 2}}&text={{java.encodeURI(speakText)}}`;
+  // legado 调用 TTS 时，API Key 通过 Authorization header 传递
+  const tts_url = `${base_url}/tts?voice=${voice}&model=${model}&volume=100&pitch=0&personality=undefined&rate={{(speakSpeed - 10) * 2}}&text={{java.encodeURI(speakText)}}`;
 
   const config = [
     {
@@ -40,11 +40,11 @@ export default function onRequest(context) {
       loginUrl: "",
       loginUi: "",
       loginCheckJs: "",
-      header: '{"Authorization":"***"}',
+      header: `{"Authorization":"${api_key}"}`,
     },
   ];
 
   return new Response(JSON.stringify(config), {
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json; charset=utf-8" },
   });
 }

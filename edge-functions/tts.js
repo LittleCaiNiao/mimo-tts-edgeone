@@ -37,6 +37,16 @@ export default async function onRequest(context) {
     }
   }
 
+  // 从 Authorization header 提取 API Key（legado 通过 header 传递）
+  if (!api_key) {
+    const authHeader = request.headers.get("Authorization") || "";
+    if (authHeader.startsWith("Bearer ")) {
+      api_key = authHeader.slice(7);
+    } else if (authHeader) {
+      api_key = authHeader;
+    }
+  }
+
   if (!api_key) {
     return new Response("缺少 api_key", { status: 400 });
   }
