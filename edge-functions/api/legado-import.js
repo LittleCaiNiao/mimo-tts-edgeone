@@ -1,7 +1,7 @@
 /**
  * MiMo TTS for Legado - EdgeOne Edge Function
  * Legado 导入配置 - /api/legado-import
- * 格式参考：https://legado.aoaostar.com/sources/19db2f5e.json
+ * 严格对齐 mitts 原始返回格式
  */
 
 const VOICES = {
@@ -28,22 +28,21 @@ export default function onRequest(context) {
 
   const base_url = `${url.protocol}//${url.host}`;
 
-  const tts_url = `${base_url}/tts?voice=${voice}&model=${model}&volume=100&pitch=0&rate={{(speakSpeed - 10) * 2}}&text={{java.encodeURI(speakText)}}`;
+  // 与 mitts 完全一致的 URL 格式
+  const tts_url = `${base_url}/tts?api_key=***&voice=${voice}&model=${model}&volume=100&pitch=0&personality=undefined&rate={{(speakSpeed - 10) * 2}}&text={{java.encodeURI(speakText)}}`;
 
-  // 格式严格对齐 legado httpTTS 标准
+  // 与 mitts 完全一致的 JSON 结构
   const config = [
     {
       name: `小米 - ${v_name}`,
       url: tts_url,
-      contentType: "",
+      contentType: "audio/mpeg",
       id: Date.now(),
-      lastUpdateTime: Date.now(),
-      enabledCookieJar: false,
-      concurrentRate: "0",
+      concurrentRate: "",
       loginUrl: "",
       loginUi: "",
       loginCheckJs: "",
-      header: api_key ? `{"Authorization":"${api_key}"}` : "",
+      header: `{"Authorization":"***"}`,
     },
   ];
 

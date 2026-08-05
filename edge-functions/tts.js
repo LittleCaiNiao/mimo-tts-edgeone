@@ -37,8 +37,8 @@ export default async function onRequest(context) {
     }
   }
 
-  // 从 Authorization header 提取 API Key（legado 通过 header 传递）
-  if (!api_key) {
+  // api_key 是 *** 占位符时，从 Authorization header 获取真实 key
+  if (!api_key || api_key === "***") {
     const authHeader = request.headers.get("Authorization") || "";
     if (authHeader.startsWith("Bearer ")) {
       api_key = authHeader.slice(7);
