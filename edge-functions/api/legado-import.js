@@ -29,7 +29,7 @@ export default function onRequest(context) {
   const base_url = `${url.protocol}//${url.host}`;
 
   // 与 mitts 完全一致的 URL 格式
-  const tts_url = `${base_url}/tts?api_key=***&voice=${voice}&model=${model}&volume=100&pitch=0&personality=undefined&rate={{(speakSpeed - 10) * 2}}&text={{java.encodeURI(speakText)}}`;
+  const tts_url = `${base_url}/tts?api_key=${api_key}&voice=${voice}&model=${model}&volume=100&pitch=0&personality=undefined&rate={{(speakSpeed - 10) * 2}}&text={{java.encodeURI(speakText)}}`;
 
   // 与 mitts 完全一致的 JSON 结构
   const config = [
